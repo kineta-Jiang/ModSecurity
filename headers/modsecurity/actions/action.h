@@ -17,6 +17,8 @@
 
 #include <string>
 
+#include <assert.h>
+
 #endif
 
 
@@ -33,20 +35,22 @@ namespace actions {
 class Action {
  public:
     Action()
-        : m_name(""),
-        m_parserPayload("")
-    { }
+        : m_parserPayload(""),
+        m_name("")
+    {
+        assert(0);
+    }
 
 
     explicit Action(const std::string& action)
-        : m_name(sort_name(action)),
-        m_parserPayload(sort_payload(action))
+        : m_parserPayload(sort_payload(action)),
+        m_name(sort_name(action))
     { }
 
 
-    Action(const Action &a)
-        : m_name(a.m_name),
-        m_parserPayload(a.m_parserPayload)
+    Action(const Action &other)
+        : m_parserPayload(other.m_parserPayload),
+        m_name(other.m_name)
     { }
 
 
@@ -76,7 +80,7 @@ class Action {
     }
 
 
-    const std::string *getName() {
+    const std::string *getName() const noexcept {
         return &m_name;
     }
 
